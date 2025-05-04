@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -225,31 +226,104 @@
             margin-bottom: 1rem;
         }
 
-        /* スキルセクション */
+        /* スキルセクション - 新しいスタイル */
         .skills-container {
             background-color: var(--secondary-color);
             padding: 3rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+        }
+
+        .skill-category-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .skill-category-title i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-right: 1rem;
+            background: var(--light-accent);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.2);
+        }
+
+        .skill-category-title h3 {
+            font-size: 1.6rem;
+            color: var(--primary-color);
+            margin: 0;
         }
 
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 2rem;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
         }
 
-        .skill-category h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
+        .skill-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.2rem;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            transition: transform 0.3s, box-shadow 0.3s;
             display: flex;
             align-items: center;
         }
 
-        .skill-category h3 i {
-            margin-right: 10px;
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px var(--shadow-color);
         }
 
+        .skill-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--light-accent);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .skill-info {
+            flex: 1;
+        }
+
+        .skill-info h4 {
+            margin: 0 0 8px 0;
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+
+        .skill-bar {
+            height: 8px;
+            background-color: var(--secondary-color);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-level {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), #8a84ff);
+            border-radius: 4px;
+            position: relative;
+            width: 0;
+            transition: width 1.5s ease-in-out;
+        }
+
+        /* 以前のスキルリストスタイル（念のために残しておく） */
         .skill-list {
             list-style: none;
         }
@@ -265,6 +339,15 @@
             color: var(--accent-color);
             font-weight: bold;
             margin-right: 10px;
+        }
+
+        /* ダークモード対応 */
+        [data-theme="dark"] .skill-card {
+            background-color: var(--card-bg);
+        }
+
+        [data-theme="dark"] .skill-icon {
+            background-color: rgba(138, 132, 255, 0.15);
         }
 
         /* 興味関心セクション */
@@ -510,11 +593,11 @@
             z-index: 1;
         }
 
-        input:checked + .slider {
+        input:checked+.slider {
             background-color: #2c3e50;
         }
 
-        input:checked + .slider:before {
+        input:checked+.slider:before {
             transform: translateX(26px);
         }
 
@@ -524,6 +607,17 @@
 
         .slider.round:before {
             border-radius: 50%;
+        }
+
+        /* スキルバーのアニメーション */
+        @keyframes skillFill {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
         }
 
         /* レスポンシブデザイン */
@@ -559,12 +653,33 @@
                 width: 100%;
                 padding: 0.5rem;
             }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skill-category-title {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .skill-category-title i {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
         }
 
         /* アニメーション */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .fade-in {
@@ -572,6 +687,7 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="container">
@@ -600,7 +716,8 @@
                 <div class="hero-content fade-in">
                     <h1>山田 太郎</h1>
                     <h2>香川大学大学院 創発科学研究科 博士前期課程1年</h2>
-                    <p>人工知能とデータ保護の研究に取り組んでいます。特に自然言語処理と機械学習の応用に興味があり、現在はテキストの匿名化を研究テーマとしています。新しい技術を学ぶことが好きで、研究を通じて社会に貢献できる技術の開発を目指しています。</p>
+                    <p>人工知能とデータ保護の研究に取り組んでいます。特に自然言語処理と機械学習の応用に興味があり、現在はテキストの匿名化を研究テーマとしています。新しい技術を学ぶことが好きで、研究を通じて社会に貢献できる技術の開発を目指しています。
+                    </p>
                     <a href="#contact" class="btn">連絡先を見る</a>
                 </div>
                 <div class="hero-image fade-in">
@@ -647,43 +764,222 @@
                 <h2>スキルと専門知識</h2>
             </div>
             <div class="skills-container">
+                <!-- プログラミング言語 -->
+                <div class="skill-category-title fade-in">
+                    <i class="fas fa-code"></i>
+                    <h3>プログラミング言語</h3>
+                </div>
                 <div class="skills-grid">
-                    <div class="skill-category fade-in">
-                        <h3><i class="fas fa-code"></i> プログラミング言語</h3>
-                        <ul class="skill-list">
-                            <li>Python</li>
-                            <li>Rust</li>
-                            <li>Java</li>
-                            <li>C++</li>
-                            <li>JavaScript</li>
-                        </ul>
+                    <div class="skill-card fade-in">
+                        <div class="skill-icon">
+                            <i class="fab fa-python"></i>
+                        </div>
+                        <div class="skill-info">
+                            <h4>Python</h4>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 95%;"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="skill-category fade-in">
-                        <h3><i class="fas fa-brain"></i> 機械学習・AI</h3>
-                        <ul class="skill-list">
-                            <li>PyTorch</li>
-                            <li>TensorFlow</li>
-                            <li>scikit-learn</li>
-                            <li>自然言語処理</li>
-                        </ul>
+                    <div class="skill-card fade-in">
+                        <div class="skill-icon">
+                            <i class="fas fa-cube"></i> <!-- Rustのアイコン代替 -->
+                        </div>
+                        <div class="skill-info">
+                            <h4>Rust</h4>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 80%;"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="skill-category fade-in">
-                        <h3><i class="fas fa-database"></i> データベース・ツール</h3>
-                        <ul class="skill-list">
-                            <li>SQL</li>
-                            <li>Git</li>
-                            <li>Docker</li>
-                            <li>Azure</li>
-                        </ul>
+                    <div class="skill-card fade-in">
+                        <div class="skill-icon">
+                            <i class="fab fa-java"></i>
+                        </div>
+                        <div class="skill-info">
+                            <h4>Java</h4>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 85%;"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="skill-category fade-in">
-                        <h3><i class="fas fa-chart-line"></i> データ分析</h3>
-                        <ul class="skill-list">
-                            <li>時系列分析</li>
-                            <li>Pandas</li>
-                            <li>NumPy</li>
-                            <li>因果推論</li>
-                        </ul>
+                    <div class="skill-card fade-in">
+                        <div class="skill-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="skill-info">
+                            <h4>C++</h4>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 75%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-card fade-in">
+                        <div class="skill-icon">
+                            <i class="fab fa-js"></i>
+                        </div>
+                        <div class="skill-info">
+                            <h4>JavaScript</h4>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 80%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 機械学習・AI -->
+                <div class="skill-category-title fade-in">
+                    <i class="fas fa-brain"></i>
+                    <h3>機械学習・AI</h3>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-card fade-in">
+                        <div class="skill-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="skill-info">
+                            <h4>PyTorch</h4>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 90%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-card fade-in">
+                        <div class="skill-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <div class="skill-info">
+                            <h4>TensorFlow</h4>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-card fade-in">
+                        <div class="skill-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <div class="skill-info">
+                            <h4>scikit-learn</h4>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 90%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-card fade-in">
+                        <div class="skill-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="skill-info">
+                            <h4>自然言語処理</h4>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 95%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- データベース・ツール -->
+                <div class="skill-category-title fade-in">
+                    <i class="fas fa-database"></i>
+                    <h3>データベース・ツール</h3>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-card fade-in">
+                        <div class="skill-icon">
+                            <i class="fas fa-table"></i>
+                        </div>
+                        <div class="skill-info">
+                            <h4>SQL</h4>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 80%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-card fade-in">
+                        <div class="skill-icon">
+                            <i class="fab fa-git-alt"></i>
+                        </div>
+                        <div class="skill-info">
+                            <h4>Git</h4>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 90%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-card fade-in">
+                        <div class="skill-icon">
+                            <i class="fab fa-docker"></i>
+                        </div>
+                        <div class="skill-info">
+                            <h4>Docker</h4>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-card fade-in">
+                        <div class="skill-icon">
+                            <i class="fab fa-microsoft"></i>
+                        </div>
+                        <div class="skill-info">
+                            <h4>Azure</h4>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 75%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- データ分析 -->
+                <div class="skill-category-title fade-in">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>データ分析</h3>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-card fade-in">
+                        <div class="skill-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div class="skill-info">
+                            <h4>時系列分析</h4>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-card fade-in">
+                        <div class="skill-icon">
+                            <i class="fas fa-table"></i>
+                        </div>
+                        <div class="skill-info">
+                            <h4>Pandas</h4>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 95%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-card fade-in">
+                        <div class="skill-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="skill-info">
+                            <h4>NumPy</h4>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 90%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-card fade-in">
+                        <div class="skill-icon">
+                            <i class="fas fa-sitemap"></i>
+                        </div>
+                        <div class="skill-info">
+                            <h4>因果推論</h4>
+                            <div class="skill-bar">
+                                <div class="skill-level" style="width: 80%;"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -697,53 +993,53 @@
             </div>
             <div class="publications-container">
                 <div class="publication-list">
-                    <div class="publication-item fade-in">
-                        <div class="publication-year">2025</div>
-                        <div class="publication-content">
-                            <h3>論文タイトル1：自然言語処理を用いた感情分析の新手法</h3>
-                            <p class="publication-authors">山田 太郎</p>
-                            <p class="publication-journal">ジャーナル名 / 学会名, Vol.XX, No.XX, pp.XX-XX</p>
-                            <div class="publication-links">
-                                <a href="#" class="publication-link"><i class="fas fa-external-link-alt"></i> 論文リンク</a>
-                                <a href="#" class="publication-link"><i class="fas f一秋a-file-pdf"></i> PDF</a>
-                                <a href="#" class="publication-link"><i class="fas fa-code"></i> コード</a>
-                            </div>
-                            <div class="publication-abstract">
-                                <p>本研究では、SNSデータを用いたユーザーの感情分析において、従来の手法よりも高い精度を達成する新しいディープラーニングモデルを提案しました。実験の結果、提案手法は既存手法と比較して約10%の精度向上が見られました。</p>
-                            </div>
-                        </div>
-                    </div>
                     <!-- <div class="publication-item fade-in">
-                        <div class="publication-year">2023</div>
-                        <div class="publication-content">
-                            <h3>論文タイトル2：医療画像診断のための畳み込みニューラルネットワークの改良</h3>
-                            <p class="publication-authors">佐藤 次郎, 山田 太郎, 田中 三郎</p>
-                            <p class="publication-journal">国際会議名, pp.XX-XX</p>
-                            <div class="publication-links">
-                                <a href="#" class="publication-link"><i class="fas fa-external-link-alt"></i> 論文リンク</a>
-                                <a href="#" class="publication-link"><i class="fas fa-file-pdf"></i> PDF</a>
-                            </div>
-                            <div class="publication-abstract">
-                                <p>医療画像からの異常検出において、従来のCNNモデルの限界を克服する新しいアーキテクチャを提案しました。特に少量のラベル付きデータでも高い性能を発揮する半教師あり学習アプローチを実装し、実際の医療データセットで評価しました。</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="publication-item fade-in">
-                        <div class="publication-year">2023</div>
-                        <div class="publication-content">
-                            <h3>論文タイトル3：エネルギー効率を最適化するスマートホームシステムの開発</h3>
-                            <p class="publication-authors">山田 太郎, 高橋 四郎</p>
-                            <p class="publication-journal">国内学会名, Vol.XX, No.XX, pp.XX-XX</p>
-                            <div class="publication-links">
-                                <a href="#" class="publication-link"><i class="fas fa-external-link-alt"></i> 論文リンク</a>
-                                <a href="#" class="publication-link"><i class="fas fa-file-pdf"></i> PDF</a>
-                                <a href="#" class="publication-link"><i class="fas fa-code"></i> コード</a>
-                            </div>
-                            <div class="publication-abstract">
-                                <p>IoTセンサーから収集したデータを活用し、居住者の生活パターンを学習することで、省エネルギーと快適性を両立するスマートホームシステムを開発しました。実際の住宅での実験では、従来システムと比較して約20%のエネルギー削減を達成しました。</p>
-                            </div>
-                        </div>
-                    </div> -->
+        <div class="publication-year">2025</div>
+        <div class="publication-content">
+            <h3>論文タイトル1：自然言語処理を用いた感情分析の新手法</h3>
+            <p class="publication-authors">山田 太郎</p>
+            <p class="publication-journal">ジャーナル名 / 学会名, Vol.XX, No.XX, pp.XX-XX</p>
+            <div class="publication-links">
+                <a href="#" class="publication-link"><i class="fas fa-external-link-alt"></i> 論文リンク</a>
+                <a href="#" class="publication-link"><i class="fas fa-file-pdf"></i> PDF</a>
+                <a href="#" class="publication-link"><i class="fas fa-code"></i> コード</a>
+            </div>
+            <div class="publication-abstract">
+                <p>本研究では、SNSデータを用いたユーザーの感情分析において、従来の手法よりも高い精度を達成する新しいディープラーニングモデルを提案しました。実験の結果、提案手法は既存手法と比較して約10%の精度向上が見られました。</p>
+            </div>
+        </div>
+    </div>
+    <div class="publication-item fade-in">
+        <div class="publication-year">2023</div>
+        <div class="publication-content">
+            <h3>論文タイトル2：医療画像診断のための畳み込みニューラルネットワークの改良</h3>
+            <p class="publication-authors">佐藤 次郎, 山田 太郎, 田中 三郎</p>
+            <p class="publication-journal">国際会議名, pp.XX-XX</p>
+            <div class="publication-links">
+                <a href="#" class="publication-link"><i class="fas fa-external-link-alt"></i> 論文リンク</a>
+                <a href="#" class="publication-link"><i class="fas fa-file-pdf"></i> PDF</a>
+            </div>
+            <div class="publication-abstract">
+                <p>医療画像からの異常検出において、従来のCNNモデルの限界を克服する新しいアーキテクチャを提案しました。特に少量のラベル付きデータでも高い性能を発揮する半教師あり学習アプローチを実装し、実際の医療データセットで評価しました。</p>
+            </div>
+        </div>
+    </div>
+    <div class="publication-item fade-in">
+        <div class="publication-year">2023</div>
+        <div class="publication-content">
+            <h3>論文タイトル3：エネルギー効率を最適化するスマートホームシステムの開発</h3>
+            <p class="publication-authors">山田 太郎, 高橋 四郎</p>
+            <p class="publication-journal">国内学会名, Vol.XX, No.XX, pp.XX-XX</p>
+            <div class="publication-links">
+                <a href="#" class="publication-link"><i class="fas fa-external-link-alt"></i> 論文リンク</a>
+                <a href="#" class="publication-link"><i class="fas fa-file-pdf"></i> PDF</a>
+                <a href="#" class="publication-link"><i class="fas fa-code"></i> コード</a>
+            </div>
+            <div class="publication-abstract">
+                <p>IoTセンサーから収集したデータを活用し、居住者の生活パターンを学習することで、省エネルギーと快適性を両立するスマートホームシステムを開発しました。実際の住宅での実験では、従来システムと比較して約20%のエネルギー削減を達成しました。</p>
+            </div>
+        </div>
+    </div> -->
                 </div>
             </div>
         </div>
@@ -787,10 +1083,11 @@
                     <p><i class="fas fa-map-marker-alt"></i> 〒761-0296 香川県高松市林町 2217-20</p>
 
                     <div class="social-links">
-                        <a href="https://github.com/IlyushinSukhoi" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://github.com/IlyushinSukhoi" aria-label="GitHub"><i
+                                class="fab fa-github"></i></a>
                         <!-- <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="ResearchGate"><i class="fab fa-researchgate"></i></a> -->
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="ResearchGate"><i class="fab fa-researchgate"></i></a> -->
                     </div>
                 </div>
             </div>
@@ -810,7 +1107,7 @@
         // フェードインアニメーション
         document.addEventListener('DOMContentLoaded', () => {
             const fadeElements = document.querySelectorAll('.fade-in');
-            
+
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -822,19 +1119,19 @@
             }, {
                 threshold: 0.1
             });
-            
+
             fadeElements.forEach(element => {
                 element.style.opacity = 0;
                 element.style.transform = 'translateY(20px)';
                 element.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
                 observer.observe(element);
             });
-            
+
             // スムーズスクロール
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
-                    
+
                     document.querySelector(this.getAttribute('href')).scrollIntoView({
                         behavior: 'smooth'
                     });
@@ -843,18 +1140,18 @@
 
             // ダークモード切り替え
             const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
-            
+
             // ローカルストレージからテーマを取得
             const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
-            
+
             if (currentTheme) {
                 document.documentElement.setAttribute('data-theme', currentTheme);
-                
+
                 if (currentTheme === 'dark') {
                     toggleSwitch.checked = true;
                 }
             }
-            
+
             // テーマ切り替え関数
             function switchTheme(e) {
                 if (e.target.checked) {
@@ -865,7 +1162,7 @@
                     localStorage.setItem('theme', 'light');
                 }
             }
-            
+
             // イベントリスナー
             toggleSwitch.addEventListener('change', switchTheme, false);
 
@@ -877,7 +1174,56 @@
                     abstract.style.display = abstract.style.display === 'none' ? 'block' : 'none';
                 });
             });
+
+            // スキルバーのアニメーション
+            const skillObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const skillLevels = entry.target.querySelectorAll('.skill-level');
+                        skillLevels.forEach(level => {
+                            const width = level.style.width;
+                            level.style.width = '0';
+                            setTimeout(() => {
+                                level.style.width = width;
+                            }, 200);
+                        });
+                        skillObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.2
+            });
+
+            // スキルカテゴリーごとにアニメーションを適用
+            document.querySelectorAll('.skills-grid').forEach(grid => {
+                skillObserver.observe(grid);
+            });
+
+            // スキルカードホバーエフェクト
+            const skillCards = document.querySelectorAll('.skill-card');
+            skillCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    const icon = card.querySelector('.skill-icon i');
+                    icon.classList.add('fa-beat');
+                    setTimeout(() => {
+                        icon.classList.remove('fa-beat');
+                    }, 1000);
+                });
+            });
+
+            // スキルアイコンのランダムカラー効果（オプション）
+            const colors = ['#6c63ff', '#ff6584', '#43a047', '#ff9800', '#9c27b0', '#2196f3'];
+            document.querySelectorAll('.skill-icon').forEach(icon => {
+                icon.addEventListener('click', (e) => {
+                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                    e.currentTarget.style.color = randomColor;
+                    setTimeout(() => {
+                        e.currentTarget.style.color = '';
+                    }, 1500);
+                });
+            });
         });
     </script>
 </body>
+
 </html>
