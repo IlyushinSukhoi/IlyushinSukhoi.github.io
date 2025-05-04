@@ -323,6 +323,14 @@
             transition: width 1.5s ease-in-out;
         }
 
+        /* カスタムアイコン用のスタイル */
+        .custom-icon {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            /* アイコンが歪まないように */
+        }
+
         /* 以前のスキルリストスタイル（念のために残しておく） */
         .skill-list {
             list-style: none;
@@ -348,6 +356,11 @@
 
         [data-theme="dark"] .skill-icon {
             background-color: rgba(138, 132, 255, 0.15);
+        }
+
+        [data-theme="dark"] .custom-icon {
+            filter: brightness(1.2);
+            /* ダークモードでは少し明るく */
         }
 
         /* 興味関心セクション */
